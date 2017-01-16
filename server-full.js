@@ -201,6 +201,7 @@ app.put('/data/:objType/:id',  function (req, res) {
 app.post('/login', function (req, res) {
 	dbConnect().then((db) => {
 		db.collection('user').findOne({username: req.body.username, pass: req.body.pass}, function (err, user) {
+				cl(user);
 			if (user) {
 				cl('Login Succesful');
                 delete user.pass;
