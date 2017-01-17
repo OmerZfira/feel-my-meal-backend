@@ -81,7 +81,7 @@ app.get('/data/:objType', function (req, res) {
 				cl('Cannot get you a list of ', err)
 				res.json(404, { error: 'not found' })
 			} else {
-				cl("Returning list of " + objs.length + " " + objType + "s");
+				// cl("Returning list of " + objs.length + " " + objType + "s");
 				res.json(objs);
 			}
 			db.close();
@@ -119,6 +119,48 @@ app.get('/data/:objType/:id', function (req, res) {
 		});
 });
 
+// POST - get meals for user 
+app.post('/getMealByUser', function (req, res) {
+	cl("getting meals for " + req.body._id);
+
+	const userId = req.body._id;
+
+	dbConnect().then((db) => {
+		const collection = db.collection('meal');
+		collection.find({ userId: userId }).toArray((err, result) => {
+			if (err) {
+					cl('Cannot get you that ', err)
+					res.json(404, { error: 'not found' })
+				} else {
+					cl("Returning -all meals of " + userId);
+					res.json(result);
+				}
+			db.close();
+		});
+	});
+});
+
+// POST - get Feelings for user 
+app.post('/getFeelingsByUser', function (req, res) {
+	cl("getting feelings for " + req.body._id);
+
+	const userId = req.body._id;
+
+	dbConnect().then((db) => {
+		const collection = db.collection('feeling');
+		collection.find({ userId: userId }).toArray((err, result) => {
+			if (err) {
+					cl('Cannot get you that ', err)
+					res.json(404, { error: 'not found' })
+				} else {
+					cl("Returning -all meals of " + userId);
+					res.json(result);
+				}
+			db.close();
+		});
+	});
+});
+
 // DELETE
 app.delete('/data/:objType/:id', function (req, res) {
 	const objType = req.params.objType;
@@ -139,7 +181,7 @@ app.delete('/data/:objType/:id', function (req, res) {
 	});
 });
 
-// POST - adds 
+// POST - adds latestMeals
 app.post('/data/:objType', upload.single('file'), function (req, res) {
 
 	const objType = req.params.objType;
@@ -224,15 +266,14 @@ app.post('/signup', upload.single('file'), function (req, res) {
 		});
 	});
 });
+
+
 // Basic Login/Logout/Protected assets
 app.post('/login', function (req, res) {
 	dbConnect().then((db) => {
-<<<<<<< HEAD
-		db.collection('user').findOne({username: req.body.username, pass: req.body.pass}, function (err, user) {
-				cl(user);
-=======
+
 		db.collection('user').findOne({ username: req.body.username, pass: req.body.pass }, function (err, user) {
->>>>>>> 611179c41b77f54aa45a49615a22d6181fc8611e
+
 			if (user) {
 				cl('Login Succesful');
 				delete user.pass;
