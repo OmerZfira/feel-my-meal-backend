@@ -38,6 +38,8 @@ const baseUrl = serverRoot + 'data';
 
 
 app.use(express.static('uploads'));
+// app.use(express.static(__dirname + '/'));
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(clientSessions({
@@ -71,6 +73,12 @@ function dbConnect() {
 }
 
 // GETs a list
+app.get('/sw1.js', function (req, res) {
+	cl(req);
+	cl(req.header);
+	// const objType = req.params.objType;
+
+});
 app.get('/data/:objType', function (req, res) {
 	const objType = req.params.objType;
 	dbConnect().then((db) => {
