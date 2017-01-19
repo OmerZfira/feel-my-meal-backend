@@ -34,11 +34,15 @@ var corsOptions = {
 };
 
 const serverRoot = 'http://localhost:3003/';
+let port = process.env.PORT || 5000;
 const baseUrl = serverRoot + 'data';
 
 
 app.use(express.static('uploads'));
-// app.use(express.static(__dirname + '/'));
+app.listen(port, function () {
+  console.log('server started ' + port);
+});
+app.use(express.static(__dirname + '/'));
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -57,7 +61,7 @@ function dbConnect() {
 
 	return new Promise((resolve, reject) => {
 		// Connection URL
-		var url = 'mongodb://localhost:27017/feelMyMeal';
+		var url = 'mongodb://omer:om1234@ds117199.mlab.com:17199/feelmymeal';
 		// Use connect method to connect to the Server
 		mongodb.MongoClient.connect(url, function (err, db) {
 			if (err) {
@@ -351,7 +355,7 @@ http.listen(3003, function () {
 function cl(...params) {
 	console.log.apply(console, params);
 }
-
+app.use('/*', express.static(__dirname));
 // Just for basic testing the socket
 // app.get('/', function (req, res) {
 // 	res.sendFile(__dirname + '/test-socket.html');
