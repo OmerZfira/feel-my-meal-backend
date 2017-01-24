@@ -147,10 +147,10 @@ app.post('/getMealByUser', function (req, res) {
 				} else {
 					cl("Returning -all meals of " + userId);
 					// Bring only meals from 2 days ago/ahead
-					result = result.filter((meal) => {
-						return (meal.time > timeNow - 2*DAY && meal.time < timeNow + 2*DAY);
-					});
-					cl(result)
+					// result = result.filter((meal) => {
+					// 	return (meal.time > timeNow - 2*DAY && meal.time < timeNow + 2*DAY);
+					// });
+					// cl(result)
 					res.json(result);
 				}
 			db.close();
