@@ -317,7 +317,7 @@ app.put('/data/user', function (req, res) {
 	dbConnect().then((db) => {
 		db.collection('user').updateOne(
 			{ _id: updatedUser._id },
-			{ $set: { "lang": updatedUser.lang, "pushTimer": updatedUser.pushTimer } },
+			{ $set: { settings: updatedUser.settings } },
 			(err, result) => {
 				if (err) {
 					cl('Cannot Update settings', err)
