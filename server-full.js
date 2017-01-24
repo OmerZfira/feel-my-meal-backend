@@ -142,7 +142,6 @@ app.post('/getMealByUser', function (req, res) {
 		const collection = db.collection('meal');
 		collection.find({ userId: userId }).toArray((err, result) => {
 			if (err) {
-<<<<<<< HEAD
 					cl('Cannot get you that ', err)
 					res.json(404, { error: 'not found' })
 				} else {
@@ -154,19 +153,7 @@ app.post('/getMealByUser', function (req, res) {
 					// cl(result)
 					res.json(result);
 				}
-=======
-				cl('Cannot get you that ', err)
-				res.json(404, { error: 'not found' })
-			} else {
-				cl("Returning -all meals of " + userId);
-				// Bring only meals from 2 days ago/ahead
-				result = result.filter((meal) => {
-					return (meal.time > timeNow - 2 * DAY && meal.time < timeNow + 2 * DAY);
-				});
-				cl(result)
-				res.json(result);
-			}
->>>>>>> c56d23aca009bbf7e213ada368cc0856016bf383
+
 			db.close();
 		});
 	});
