@@ -40,7 +40,7 @@ const baseUrl = serverRoot + 'data';
 
 app.use(express.static('uploads'));
 app.listen(port, function () {
-  console.log('server started ' + port);
+	console.log('server started ' + port);
 });
 app.use(express.static(__dirname + '/'));
 
@@ -134,7 +134,7 @@ app.get('/data/:objType/:id', function (req, res) {
 // POST - get meals for user 
 app.post('/getMealByUser', function (req, res) {
 	cl("getting meals for " + req.body);
-    const DAY = 8.64e+7;
+	const DAY = 8.64e+7;
 	const userId = req.body._id;
 	const timeNow = Date.now();
 	cl('timeNow', timeNow)
@@ -142,6 +142,7 @@ app.post('/getMealByUser', function (req, res) {
 		const collection = db.collection('meal');
 		collection.find({ userId: userId }).toArray((err, result) => {
 			if (err) {
+<<<<<<< HEAD
 					cl('Cannot get you that ', err)
 					res.json(404, { error: 'not found' })
 				} else {
@@ -153,6 +154,19 @@ app.post('/getMealByUser', function (req, res) {
 					// cl(result)
 					res.json(result);
 				}
+=======
+				cl('Cannot get you that ', err)
+				res.json(404, { error: 'not found' })
+			} else {
+				cl("Returning -all meals of " + userId);
+				// Bring only meals from 2 days ago/ahead
+				result = result.filter((meal) => {
+					return (meal.time > timeNow - 2 * DAY && meal.time < timeNow + 2 * DAY);
+				});
+				cl(result)
+				res.json(result);
+			}
+>>>>>>> c56d23aca009bbf7e213ada368cc0856016bf383
 			db.close();
 		});
 	});
@@ -168,12 +182,12 @@ app.post('/getFeelingsByUser', function (req, res) {
 		const collection = db.collection('feeling');
 		collection.find({ userId: userId }).toArray((err, result) => {
 			if (err) {
-					cl('Cannot get you that ', err)
-					res.json(404, { error: 'not found' })
-				} else {
-					cl("Returning -all meals of " + userId);
-					res.json(result);
-				}
+				cl('Cannot get you that ', err)
+				res.json(404, { error: 'not found' })
+			} else {
+				cl("Returning -all meals of " + userId);
+				res.json(result);
+			}
 			db.close();
 		});
 	});
@@ -306,6 +320,31 @@ app.post('/login', function (req, res) {
 	});
 });
 
+// PUT - updates user settings
+app.put('/data/user', function (req, res) {
+	// const objType = req.params.objType;
+	const userId = req.body._id;
+	const updatedUser = req.body;
+	if (userId && typeof userId === 'string') updatedUser._id = new mongodb.ObjectID(userId);
+
+	cl(`Requested to UPDATE the user with id: ${userId}`);
+	dbConnect().then((db) => {
+		db.collection('user').updateOne(
+			{ _id: updatedUser._id },
+			{ $set: { "lang": updatedUser.lang, "pushTimer": updatedUser.pushTimer } },
+			(err, result) => {
+				if (err) {
+					cl('Cannot Update settings', err)
+					res.status(500).json({ error: 'Update settings failed' })
+				} else {
+					res.json(updatedUser);
+				}
+				db.close();
+			});
+	});
+});
+
+
 app.get('/logout', function (req, res) {
 	req.session.reset();
 	res.end('Loggedout');
@@ -319,6 +358,7 @@ function requireLogin(req, res, next) {
 		next();
 	}
 };
+
 app.get('/protected', requireLogin, function (req, res) {
 	res.end('User is loggedin, return some data');
 });
