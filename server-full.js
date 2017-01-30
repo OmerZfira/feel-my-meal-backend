@@ -54,7 +54,7 @@ app.use(clientSessions({
 }));
 
 const http = require('http').Server(app);
-// const io = require('socket.io')(http);
+const io = require('socket.io')(http);
 
 
 function dbConnect() {
@@ -362,18 +362,18 @@ http.listen(3003, function () {
 });
 
 
-// io.on('connection', function (socket) {
-// 	console.log('a user connected');
-// 	socket.on('disconnect', function () {
-// 		console.log('user disconnected');
-// 	});
-// 	socket.on('chat message', function (msg) {
-// 		// console.log('message: ' + msg);
-// 		io.emit('chat message', msg);
-// 	});
-// });
+io.on('connection', function (socket) {
+	console.log('a user connected');
+	socket.on('disconnect', function () {
+		console.log('user disconnected');
+	});
+	socket.on('chat message', function (msg) {
+		console.log('message: ' + msg);	
+		io.emit('chat message', msg);
+	});
+});
 
-// cl('WebSocket is Ready');
+cl('WebSocket is Ready');
 
 // Some small time utility functions
 function cl(...params) {
