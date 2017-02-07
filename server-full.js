@@ -34,14 +34,14 @@ var corsOptions = {
 };
 
 const serverRoot = 'http://localhost:3003/';
-let port = process.env.PORT || 5000;
+// let port = process.env.PORT || 3003;
 const baseUrl = serverRoot + 'data';
 
 
-app.use(express.static('uploads'));
-app.listen(port, function () {
-	console.log('server started ' + port);
-});
+// app.use(express.static('uploads'));
+// app.listen(port, function () {
+// 	console.log('server started ' + port);
+// });
 app.use(express.static(__dirname + '/'));
 
 app.use(cors(corsOptions));
@@ -291,7 +291,7 @@ app.post('/login', function (req, res) {
 		db.collection('user').findOne({ username: req.body.username, pass: req.body.pass }, function (err, user) {
 
 			if (user) {
-				cl('Login Succesful');
+				cl('Login Succesful user', user);
 				delete user.pass;
 				req.session.user = user;  //refresh the session value
 				res.json({ token: 'Beareloginr: puk115th@b@5t', user });
@@ -368,7 +368,7 @@ io.on('connection', function (socket) {
 		console.log('user disconnected');
 	});
 	socket.on('chat message', function (msg) {
-		console.log('message: ' + msg);	
+		console.log('message: ' + msg.msg);	
 		io.emit('chat message', msg);
 	});
 });
