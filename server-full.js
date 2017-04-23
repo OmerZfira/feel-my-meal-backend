@@ -33,10 +33,11 @@ var corsOptions = {
 	credentials: true
 };
 
-const serverRoot = 'https://coding-academy.net/feelmymeal/app';
+const serverRoot = 'https://coding-academy.net/feelmymeal/';
 // const serverRoot = 'http://localhost:3003/';
 // let port = process.env.PORT || 3003;
-const baseUrl = serverRoot + 'data';
+// const baseUrl = serverRoot + 'data';
+const baseUrl = serverRoot + 'app';
 
 
 // app.use(express.static('uploads'));
