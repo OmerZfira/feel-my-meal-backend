@@ -33,7 +33,8 @@ var corsOptions = {
 	credentials: true
 };
 
-const serverRoot = 'http://localhost:3003/';
+const serverRoot = 'https://coding-academy.net/feelmymeal/app';
+// const serverRoot = 'http://localhost:3003/';
 // let port = process.env.PORT || 3003;
 const baseUrl = serverRoot + 'data';
 
