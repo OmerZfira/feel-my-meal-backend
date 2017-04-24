@@ -33,11 +33,12 @@ var corsOptions = {
 	credentials: true
 };
 
-const serverRoot = 'https://coding-academy.net/feelmymeal/';
-// const serverRoot = 'http://localhost:3003/';
+// const serverRoot = 'http://coding-academy.net/feelmymeal/app/';
+const serverRoot = 'http://localhost:3003/';
+// const serverRoot = 'http://localhost:3019/';
 // let port = process.env.PORT || 3003;
-// const baseUrl = serverRoot + 'data';
-const baseUrl = serverRoot + 'app';
+const baseUrl = serverRoot + 'data';
+// const baseUrl = serverRoot + 'app';
 
 
 // app.use(express.static('uploads'));
@@ -256,6 +257,7 @@ app.put('/data/:objType/:id', function (req, res) {
 // POST - signup 
 app.post('/signup', upload.single('file'), function (req, res) {
 	cl("Signup for " + req.body.username);
+	console.log("Signup for " + req.body.username);
 
 	const user = req.body;
 	// If there is a file upload, add the url to the obj
