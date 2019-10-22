@@ -40,6 +40,7 @@ const serverRoot = 'http://localhost:3003/';
 // let port = process.env.PORT || 3003;
 const baseUrl = serverRoot + 'data';
 // const baseUrl = serverRoot + 'app';
+const PORT = process.env.PORT || 3003;
 
 
 // app.use(express.static('uploads'));
@@ -357,7 +358,7 @@ app.get('/protected', requireLogin, function (req, res) {
 // Kickup our server 
 // Note: app.listen will not work with cors and the socket
 // app.listen(3003, function () {
-http.listen(3003, function () {
+http.listen(PORT, function () {
 	console.log(`misterREST server is ready at ${baseUrl}`);
 	console.log(`GET (list): \t\t ${baseUrl}/{entity}`);
 	console.log(`GET (single): \t\t ${baseUrl}/{entity}/{id}`);

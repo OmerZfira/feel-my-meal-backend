@@ -2,8 +2,13 @@
   "name": "SimpleRESTServer",
   "version": "0.0.2",
   "private": true,
+  "main": "server-full.js",
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
-    "start": "nodemon server-full.js"
+    "start": "node server-full.js",
+    "start:dev": "nodemon server-full.js"
   },
   "dependencies": {
     "babel-core": "^6.14.0",
