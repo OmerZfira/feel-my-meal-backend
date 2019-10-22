@@ -2210,7 +2210,7 @@ webpackJsonp([2,0],[
 			});
 	
 			peer.on('stream', function (stream) {
-				_this.$refs.videoDisplayInc.src = window.URL.createObjectURL(stream);
+				_this.$refs.videoDisplayInc.srcObject = stream;
 				_this.$refs.videoDisplayInc.play();
 			});
 	
@@ -2220,7 +2220,7 @@ webpackJsonp([2,0],[
 			if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 				navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
 					_this.outStream = stream;
-					_this.$refs.videoDisplay.src = window.URL.createObjectURL(stream);
+					_this.$refs.videoDisplay.srcObject = stream;
 					_this.$refs.videoDisplay.play();
 					if (peerConnected) {
 						peer.addStream(stream);
@@ -4789,4 +4789,4 @@ webpackJsonp([2,0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.a3c14eed2aefab1525c4.js.map
+//# sourceMappingURL=app.68260b06f3674c9e03b6.js.map
