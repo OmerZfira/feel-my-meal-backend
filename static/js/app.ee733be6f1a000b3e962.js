@@ -2163,7 +2163,7 @@ webpackJsonp([2,0],[
 			this.myUser = this.user.username.slice(0, 1) === 'w' ? 'W50hyPy2Cl' : 'eVHJlpt7Ac';
 			this.targetUser = this.user.username.slice(0, 1) === 'w' ? 'eVHJlpt7Ac' : 'W50hyPy2Cl';
 	
-			var socketPath =  false ? 'http://localhost:3003' : 'https://feelmymeal.herokuapp.com/3003';
+			var socketPath =  false ? 'http://localhost:3003' : 'https://feelmymeal.herokuapp.com';
 	
 			this.socket = (0, _socket2.default)(socketPath);
 			this.socket.on('connect', function () {
@@ -4789,4 +4789,4 @@ webpackJsonp([2,0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.68260b06f3674c9e03b6.js.map
+//# sourceMappingURL=app.ee733be6f1a000b3e962.js.map
