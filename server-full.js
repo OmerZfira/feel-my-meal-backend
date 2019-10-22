@@ -29,7 +29,8 @@ var upload = multer({ storage: storage })
 const app = express();
 
 var corsOptions = {
-	origin: /http:\/\/localhost:\d+/,
+	// origin: /http:\/\/10\.0\.0\.11:\d+/,
+	origin: '*',
 	credentials: true
 };
 
@@ -64,8 +65,8 @@ function dbConnect() {
 
 	return new Promise((resolve, reject) => {
 		// Connection URL
-		// var url = 'mongodb://omer:om1234@ds117199.mlab.com:17199/feelmymeal';
-		var url = 'mongodb://rbe:Kokoloko2@ds115671.mlab.com:15671/feelmymeal';
+		var url = 'mongodb://omer:om1234@ds117199.mlab.com:17199/feelmymeal';
+		// var url = 'mongodb://rbe:Kokoloko2@ds115671.mlab.com:15671/feelmymeal';
 		// Use connect method to connect to the Server
 		mongodb.MongoClient.connect(url, function (err, db) {
 			if (err) {
@@ -373,8 +374,12 @@ io.on('connection', function (socket) {
 		console.log('user disconnected');
 	});
 	socket.on('chat message', function (msg) {
-		console.log('message: ' + msg.msg);	
+		console.log('message: ' + msg);	
 		io.emit('chat message', msg);
+	});
+	socket.on('rtc offer', function (msg) {
+		console.log('message: ' + msg);	
+		io.emit('rtc offer', msg);
 	});
 });
 
