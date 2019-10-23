@@ -77,7 +77,6 @@ webpackJsonp([2,0],[
 	  })),
 	  mounted: function mounted() {
 	    var path =  false ? 'http://localhost:8080/add-feeling#/' : 'https://coding-academy.net/feelmymeal/#/add-feeling';
-	
 	    if (window.location.href === path) this.showModal = true;
 	  }
 	}).$mount('#app');
@@ -2152,11 +2151,16 @@ webpackJsonp([2,0],[
 				myUser: '',
 				targetUser: 'w',
 				outStream: null,
-				mutedOut: false };
+				isMutedOut: false };
 		},
 	
 		computed: (0, _extends3.default)({}, (0, _vuex.mapGetters)(['user'])),
-		methods: {},
+		methods: {
+			toggleMuteOut: function toggleMuteOut() {
+				this.isMutedOut = !this.isMutedOut;
+				this.outStream.getAudioTracks()[0].enabled = this.isMutedOut;
+			}
+		},
 		mounted: function mounted() {
 			var _this = this;
 	
@@ -2170,7 +2174,6 @@ webpackJsonp([2,0],[
 				_this.socketReady = true;
 			});
 			this.socket.on('rtc offer', function (msg) {
-				console.log('msg received', msg);
 				if (msg.to === _this.myUser && msg.data.type === 'offer') {
 					peer.signal(msg.data);
 				} else if (msg.to === _this.myUser && msg.data.type === 'answer') {
@@ -2198,6 +2201,7 @@ webpackJsonp([2,0],[
 					}, 2000);
 				}
 			});
+	
 			var peerConnected = false;
 			peer.on('connect', function () {
 				console.log('CONNECT');
@@ -2215,8 +2219,6 @@ webpackJsonp([2,0],[
 			});
 	
 			var mediaConfig = { audio: { echoCancellation: true }, video: true };
-	
-	
 			if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 				navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
 					_this.outStream = stream;
@@ -2290,7 +2292,7 @@ webpackJsonp([2,0],[
 	var routes = [{
 	  path: '/',
 	  name: 'home',
-	  component: _home2.default
+	  component: _videoChat2.default
 	}, {
 	  path: '/add-feeling',
 	  name: 'add-feeling',
@@ -2323,7 +2325,10 @@ webpackJsonp([2,0],[
 	  path: '/video-chat',
 	  name: 'video-chat',
 	  component: _videoChat2.default
-	}, { path: '*', redirect: { name: 'home' } }];
+	}, {
+	  path: '*',
+	  redirect: { name: 'home' }
+	}];
 	
 	var router = new _vueRouter2.default({
 	  routes: routes
@@ -4602,15 +4607,13 @@ webpackJsonp([2,0],[
 	  }, [_vm._v("Hello " + _vm._s(_vm.user.username) + ", place your call!")]), _vm._v(" "), _c('button', {
 	    staticClass: "btn btn-warning",
 	    on: {
-	      "click": function($event) {
-	        _vm.mutedOut = !_vm.mutedOut
-	      }
+	      "click": _vm.toggleMuteOut
 	    }
 	  }, [_vm._v("mute me")]), _vm._v(" "), _c('video', {
 	    ref: "videoDisplay",
 	    staticClass: "video-display",
 	    domProps: {
-	      "muted": _vm.mutedOut
+	      "muted": _vm.isMutedOut
 	    }
 	  }), _vm._v(" "), _c('video', {
 	    ref: "videoDisplayInc",
@@ -4713,6 +4716,12 @@ webpackJsonp([2,0],[
 	  }, [_c('li', [_c('router-link', {
 	    attrs: {
 	      "to": {
+	        name: 'video-chat'
+	      }
+	    }
+	  }, [_vm._v("VC")])], 1), _vm._v(" "), _c('li', [_c('router-link', {
+	    attrs: {
+	      "to": {
 	        name: 'my-meals'
 	      }
 	    }
@@ -4789,4 +4798,4 @@ webpackJsonp([2,0],[
 
 /***/ })
 ]);
-//# sourceMappingURL=app.ee733be6f1a000b3e962.js.map
+//# sourceMappingURL=app.c13b4812af3ba108fc4c.js.map
